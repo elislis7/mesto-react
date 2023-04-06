@@ -13,12 +13,15 @@ function App() {
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
 
+  /* const [urlInput, setUrlInput] = useState('') */
+  
+
   const handleEditAvatarClick = () => {
-    setisEditProfilePopupOpen(true);
+    setisEditAvatarPopupOpen(true);
   }
 
   const handleEditProfileClick = () => {
-    setisEditAvatarPopupOpen(true);
+    setisEditProfilePopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
@@ -31,6 +34,8 @@ function App() {
     setisAddPlacePopupOpen(false);
     setSelectedCard({});
   }
+
+  /* const onChangeUrlInput = (e) => setUrlInput(e.target.value) */
 
   return (
     <div className='page'>
@@ -53,8 +58,9 @@ function App() {
             name='avatar'
             id='input-avatar'
             type='url'
-            value=''
             placeholder='Ссылка на картинку'
+            /* value={urlInput} 
+            onChange={onChangeUrlInput} */
             required
           />
           <span className="avatar-error input-avatar-error" />
@@ -68,9 +74,12 @@ function App() {
         onClose={closeAllPopups}>
           <input
             className="popup__input"
-            id='input-name' name="name"
+            id='input-name' 
+            name="name"
             type="text"
-            value="" placeholder="Имя"
+            placeholder="Имя"
+            /* value={urlInput} 
+            onChange={onChangeUrlInput} */
             minLength={2} maxLength={40}
             required
           />
@@ -78,8 +87,11 @@ function App() {
           <input
             className="popup__input"
             id='input-description'
-            type="text" name="about"
-            value="" placeholder="О себе"
+            type="text" 
+            name="about"
+            placeholder="О себе"
+            /* value={urlInput} 
+            onChange={onChangeUrlInput} */
             minLength={2} maxLength={200}
             required
           />
@@ -95,8 +107,11 @@ function App() {
           <input
             className="popup__input"
             id='input-title'
-            type="text" name="name"
-            value="" placeholder="Название"
+            type="text" 
+            name="name"
+            placeholder="Название"
+            /* value={urlInput} 
+            onChange={onChangeUrlInput} */
             minLength={2} maxLength={30}
             required
           />
@@ -104,8 +119,11 @@ function App() {
           <input 
             className="popup__input"
             id='input-link'
-            type="url" name="link"
-            value="" placeholder="Ссылка на картинку"
+            type="url" 
+            name="link"
+            placeholder="Ссылка на картинку"
+            /* value={urlInput} 
+            onChange={onChangeUrlInput} */
             required
           />
           <span className="link-error input-link-error" />

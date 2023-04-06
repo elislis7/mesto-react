@@ -61,9 +61,7 @@ function Main(props) {
         {cards.map((card) => (
           <Card 
             key={card._id} // название пропса = {значение}
-            name={card.name} // название пропса = {значение}
-            link={card.link} // название пропса = {значение}
-            likes={card.likes} // название пропса = {значение}
+            card={card}
             onCardClick={onCardClick} // название пропса = {значение}
           />
         ))}

@@ -1,10 +1,16 @@
 import React from 'react';
+import api from '../utils/api';
 
-function Card(card) {
+function Card(props) {
+  const {card, onCardClick} = props
 
   function handleCardClick() {
-    card.onCardClick(card);
+    onCardClick(card);
   }
+
+  /* function onDeleteCard(card) {
+    api.deleteCardApi(card._id)
+  } */
 
   return (
     <article className="element">
@@ -23,7 +29,9 @@ function Card(card) {
           className="element__trash" 
           type="button" 
           name="button" 
-          aria-label="Кнопка удаления">
+          aria-label="Кнопка удаления"
+          /* onClick={() => onDeleteCard(card)} */
+          >
         </button>
       </div>
     </article>
