@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './Card';
 import api from '../utils/api';
 
@@ -23,11 +23,7 @@ function Main(props) {
 
     api.getCards()
     .then((cardsData) => {
-      setCards(cardsData.map((data) => ({
-        name: data.name,
-        link: data.link,
-        likes: data.likes
-      })));
+      setCards(cardsData);
     })
     .catch(err => console.log(err))
   }, [])

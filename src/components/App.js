@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../index.css';
 import Header from './Header';
 import Main from './Main';
@@ -45,6 +45,7 @@ function App() {
       <PopupWithForm
         name='avatar'
         title='Обновить аватар'
+        buttonText='Сохранить'
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}>
           <input
@@ -62,6 +63,7 @@ function App() {
       <PopupWithForm
         name='profile'
         title='Редактировать профиль'
+        buttonText='Сохранить'
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}>
           <input
@@ -69,7 +71,7 @@ function App() {
             id='input-name' name="name"
             type="text"
             value="" placeholder="Имя"
-            minlength="2" maxlength="40"
+            minLength={2} maxLength={40}
             required
           />
           <span className="name-error input-name-error" />
@@ -77,8 +79,8 @@ function App() {
             className="popup__input"
             id='input-description'
             type="text" name="about"
-            value="" placeholder="Имя"
-            minlength="2" maxlength="200"
+            value="" placeholder="О себе"
+            minLength={2} maxLength={200}
             required
           />
           <span className="description-error input-description-error" />
@@ -87,6 +89,7 @@ function App() {
       <PopupWithForm
         name='place'
         title='Новое место'
+        buttonText='Создать'
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}>
           <input
@@ -94,7 +97,7 @@ function App() {
             id='input-title'
             type="text" name="name"
             value="" placeholder="Название"
-            minlength="2" maxlength="30"
+            minLength={2} maxLength={30}
             required
           />
           <span className="title-error input-title-error" />
@@ -110,7 +113,8 @@ function App() {
 
       <PopupWithForm
         name='confirm'
-        title='Вы уверены?'>
+        title='Вы уверены?'
+        buttonText='Да'>
       </PopupWithForm>
 
       <ImagePopup
