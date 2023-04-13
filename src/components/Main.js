@@ -1,38 +1,17 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import Card from './Card';
-import api from '../utils/api';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Main(props) {
 
-  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props
-
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  // Получение данных о пользователе и карточки с сервера
-  useEffect(() => {
-    api.getUserInfo()
-    .then((user) => {
-      setUserName(user.name)
-      setUserDescription(user.about)
-      setUserAvatar(user.avatar)
-    })
-    .catch((err) => console.log(err))
-
-    api.getCards()
-    .then((cardsData) => {
-      setCards(cardsData);
-    })
-    .catch(err => console.log(err))
-  }, [])
+  const {cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete } = props;
+  const currentUser = React.useContext(CurrentUserContext);
 
 	return (
     <main className="content">
       <section className="profile">
         <div className="profile__container-avatar">
-          <img className="profile__avatar" src={userAvatar} alt={userName}/>
+          <img className="profile__avatar" src={currentUser.avatar} alt={currentUser.name}/>
           <button className="profile__edit-avatar-button" 
             type="button" 
             aria-label="Кнопка редактирования аватара профиля" 
@@ -41,14 +20,14 @@ function Main(props) {
         </div>
         <div className="profile__info">
           <div className="profile__info-edit">
-            <h1 className="profile__info-name">{userName}</h1>
+            <h1 className="profile__info-name">{currentUser.name}</h1>
             <button className="profile__edit-button" 
               type="button" 
               aria-label="Кнопка редактирования профиля" 
               onClick={() => {onEditProfile(true)}}>
             </button>
           </div>
-          <p className="profile__info-description">{userDescription}</p>
+          <p className="profile__info-description">{currentUser.about}</p>
         </div>
         <button className="profile__add-button" 
           type="button" 
@@ -63,6 +42,8 @@ function Main(props) {
             key={card._id} // название пропса = {значение}
             card={card}
             onCardClick={onCardClick} // название пропса = {значение}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

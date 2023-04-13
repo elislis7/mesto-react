@@ -18,7 +18,6 @@ class Api {
       method: method,
       headers: this._headers
     }
-
     return fetch(`${this._url}/${endpoint}`,
     body 
     ? { // если есть тело запроса body
@@ -32,84 +31,39 @@ class Api {
   //получаем инфо пользователя
   getUserInfo() {
     return this._request('users/me','GET')
-
-    // return fetch(`${this._url}/users/me`, {
-    //   headers: this._headers,
-    //   method: 'GET',
-    //   })
-    //   .then(this._handleResponse)
   }
 
   //получаем карточки
   getCards() {
     return this._request('cards', 'GET')
-    
-    /* fetch(`${this._url}/cards`, {
-      headers: this._headers,
-      method: 'GET',
-      })
-      .then(this._handleResponse) */
   }
 
   //редактирование профиля
-  editProfile(profile) {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
-      method: "PATCH",
-      body: JSON.stringify(profile),
-      })
-      .then(this._handleResponse)
+  editProfile(data) {
+    return this._request('users/me', 'PATCH', data)
   }
 
   //редактирование аватара
   editProfileAvatar(avatar) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      headers: this._headers,
-      method: "PATCH",
-      body: JSON.stringify(avatar),
-      })
-      .then(this._handleResponse)
+    return this._request('users/me/avatar', 'PATCH', avatar) 
   }
 
   //создание карточки
   createCard(card) {
-    return fetch(`${this._url}/cards`, {
-      headers: this._headers,
-      method: "POST",
-      body: JSON.stringify(card),
-      })
-      .then(this._handleResponse)
+    return this._request('cards', 'POST', card)
   }
 
   //удаление карточки
   deleteCardApi(id) {
     return this._request(`cards/${id}`, 'DELETE')
-    
-    /* fetch(`${this._url}/cards/${id}`, {
-      headers: this._headers,
-      method: "DELETE",
-      })
-      .then(this._handleResponse) */
   }
 
   // добавление лайка
-  addLikes(id) {
-    return fetch(`${this._url}/cards/${id}/likes`, {
-      headers: this._headers,
-      method: "PUT",
-      })
-      .then(this._handleResponse)
-  }
-
-  //удаление лайка
-  deleteLikes(id) {
-    return fetch(`${this._url}/cards/${id}/likes`, {
-      headers: this._headers,
-      method: "DELETE",
-      })
-      .then(this._handleResponse)
+  updateLikes(cardId, isLiked) {
+    return this._request(`cards/${cardId}/likes`, isLiked ? 'DELETE' : 'PUT') // изменение лайка карточки, если лайк есть то убираем лайк (DELETE), если его нет, то ставим (PUT)
   }
 }
+
 const api = new Api({
   url:'https://mesto.nomoreparties.co/v1/cohort-61',
   headers: {
@@ -119,3 +73,13 @@ const api = new Api({
 });
 
 export default api;
+
+/* как было:
+//получаем инфо пользователя
+getUserInfo() {
+  return fetch(`${this._url}/users/me`, {
+    headers: this._headers,
+    method: 'GET',
+  })
+  .then(this._handleResponse)
+} */
