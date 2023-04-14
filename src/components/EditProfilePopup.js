@@ -12,7 +12,7 @@ function EditProfilePopup(props) {
   React.useEffect(() => {
     setName(currentUser.name);
     setAbout(currentUser.about);
-  }, [ currentUser ]);
+  }, [ currentUser, isOpen ]);
 
   function handleSubmit(e) {
     e.preventDefault(); // запрещаем работу браузера по умолчанию
@@ -36,7 +36,7 @@ function EditProfilePopup(props) {
     <PopupWithForm
       name='profile'
       title='Редактировать профиль'
-      buttonText={onLoading ? 'Сохранение' : 'Сохранить'}
+      buttonText={onLoading ? 'Сохранение...' : 'Сохранить'}
       isOpen={isOpen}
       onSubmit={handleSubmit}
       onClose={onClose} >
@@ -46,7 +46,7 @@ function EditProfilePopup(props) {
           name="name"
           type="text"
           placeholder="Имя"
-          value={name} 
+          value={name || ''} 
           onChange={handleChangeName}
           minLength={2} maxLength={40}
           required />
@@ -57,7 +57,7 @@ function EditProfilePopup(props) {
           type="text" 
           name="about"
           placeholder="О себе"
-          value={about} 
+          value={about || ''} 
           onChange={handleChangeAbout}
           minLength={2} maxLength={200}
           required />

@@ -19,9 +19,9 @@ function App() {
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
 
-  const [deletedCard, setDeletedCard] = useState({})
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
+  const [deletedCard, setDeletedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +60,7 @@ function App() {
     setisAddPlacePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setSelectedCard({});
+    setDeletedCard(null);
   }
 
   // функция по проверке лайков и их постановкой и удаления
@@ -77,10 +78,19 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    // открытие модального окна подтверждения удаления    
-    handleOpenConfirm()
     // назначаем удаляемую карточку
-    setDeletedCard(card)
+    setDeletedCard(card._id)
+  }
+
+  function handleConfirmDelete() {
+    setIsLoading(true);
+    api.deleteCardApi(deletedCard)
+      .then(() => {
+        setCards(cards => cards.filter(item => item._id !== deletedCard))
+        closeAllPopups();
+      })
+      .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
   }
 
   function handleUpdateUser(newUserInfo) {
@@ -120,6 +130,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser} >
       <div className='page'>
         <Header />
+
         <Main 
           cards={cards}
           onEditAvatar={handleEditAvatarClick} 
@@ -127,8 +138,9 @@ function App() {
           onAddPlace={handleOpenAddPlace}
           onCardClick={setSelectedCard}
           onCardLike={handleCardLike} // добавление и удаление лайков 
-          onCardDelete={handleCardDelete} // удаление карточек
+          onCardDelete={handleCardDelete}
         />
+
         <Footer />
         
         <EditAvatarPopup 
@@ -153,10 +165,10 @@ function App() {
         />
 
         <ConfirmDeletePopup
-          isOpen={isConfirmPopupOpen}
+          isOpen={!!deletedCard}
+          onConfirm={handleConfirmDelete}
+          onLoading={isLoading}
           onClose={closeAllPopups}
-          deletedCard={deletedCard}
-          setCards={setCards}
         />
 
         <ImagePopup

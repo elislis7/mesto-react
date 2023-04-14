@@ -33,7 +33,7 @@ function AddPlacePopup(props) {
     <PopupWithForm
       name='place'
       title='Новое место'
-      buttonText={onLoading ? 'Создаю' : 'Создать'}
+      buttonText={onLoading ? 'Создание...' : 'Создать'}
       isOpen={isOpen}
       onSubmit={handleSubmit}
       onClose={onClose} >
@@ -43,7 +43,7 @@ function AddPlacePopup(props) {
           type="text" 
           name="name"
           placeholder="Название"
-          value={placeName} 
+          value={placeName || ''} 
           onChange={handleChangePlaceName}
           minLength={2} maxLength={30}
           required />
@@ -54,7 +54,7 @@ function AddPlacePopup(props) {
           type="url" 
           name="link"
           placeholder="Ссылка на картинку"
-          value={placeLink} 
+          value={placeLink || ''} 
           onChange={handleChangePlaceLink}
           required />
         <span className="link-error input-link-error" />
